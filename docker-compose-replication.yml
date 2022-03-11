@@ -1,0 +1,32 @@
+
+version: '3'
+
+services:
+  pg-primary:
+    build: '.'
+    image: 'darrencamp/postgres-replication'
+    restart: 'always'
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      PGDATA: '/var/lib/postgresql/data/pgdata'
+    volumes:
+     - '/var/lib/postgresql/data'
+    ports:
+     - "5432:5432"
+
+  pg-secondary:
+    build: '.'
+    image: 'darrencamp/postgres-replication'
+    restart: 'always'
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      PGDATA: '/var/lib/postgresql/data/pgdata'
+      REPLICATE_FROM: 'pg-primary'
+    volumes:
+     - '/var/lib/postgresql/data'
+    ports:
+     - "5433:5432"
+    links:
+     - 'pg-primary'

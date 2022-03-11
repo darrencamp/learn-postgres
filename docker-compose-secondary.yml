@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  secondary:
+    image: postgres:13
+    container_name: postgres_secondary
+    restart: always
+    volumes:
+        - ./data-secondary:/var/lib/postgresql/data
+        - ./my-postgres.conf:/etc/postgresql/postgresql.conf
+        - ./my-pg_hba.conf:/etc/postgresql/pg_hba.conf
+    ports:
+      - '127.0.0.1:5433:5433'
+    environment:
+      - 'POSTGRES_PASSWORD=b0ndP0stGres'
+      - 'POSTGRES_DB=BondAdvance'
+    command: -p 5433
