@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Backwards compatibility for old variable names (deprecated)
 if [ "x$PGUSER"     != "x" ]; then
@@ -106,7 +106,7 @@ if [ "$1" = 'postgres' ]; then
 			$op USER "$POSTGRES_USER" WITH SUPERUSER $pass ;
 		EOSQL
 		echo
-		
+
 		fi
 
 		psql+=( --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" )
