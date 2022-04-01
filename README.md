@@ -20,6 +20,11 @@ docker network create pg-replication
 
 
 ## Certificates
+### ExtendedKey usages
+https://www.openssl.org/docs/manmaster/man5/x509v3_config.html
+
+in the openssl cfg file under [v3_req] value extendedKeyUsage set as csv for all valid usages see link above for values
+
 ### Generating keys (self-signed)
 config sample here : https://docs.scylladb.com/operating-scylla/security/generate-certificate/
 https://stackoverflow.com/questions/26759550/how-to-create-own-self-signed-root-certificate-and-intermediate-ca-to-be-importe
@@ -36,6 +41,25 @@ server.key
 server.crt
 caserver.pem
 
+refer to script: generate-cert-chain.sh
+
+### pfx file for IIS
+refer to:
+https://stackoverflow.com/questions/14953132/iis-7-error-a-specified-logon-session-does-not-exist-it-may-already-have-been
+https://stackoverflow.com/questions/6307886/how-to-create-pfx-file-from-certificate-and-private-key
+https://stackoverflow.com/questions/19552380/no-certificate-matches-private-key-while-generating-p12-file
+
+create a bundle of certificates eg (order may be important)
+`cat out/1.crt > bundle.crt`
+`cat intermediate/certs/intermediate.crt >> bundle.crt`
+`cat root-ca/certs/ca.crt >> bundle.crt`
+
+`openssl pkcs12 -export -out out/1.pfx -inkey out/1.key -in bundle.crt -in out/1.crt`
+
+#### Couldn't get this to work
+One of the stackoverflow posts above mentioned converting to pem but couldn't get that to work
+`openssl x509 -inform DER -outform PEM -in out/bondcontroller.crt -out out/bondcontroller.pem`
+
 ### windows import certificate
 https://superuser.com/questions/1031444/importing-pem-certificates-on-windows-7-on-the-command-line
 
@@ -46,4 +70,12 @@ https://superuser.com/questions/1031444/importing-pem-certificates-on-windows-7-
 For 'Intermediate Certificate Authority' replace "Root" with "CA"
 For 'Personal Store' replace "Root" with "My"
 
+
+
 # Things I learnt
+3b199bc4e7c88b008a5b630d66ec504109dfb5749a382f4b0d2c3458ff4fcbee
+
+
+
+
+Add-VMNetworkAdapter -VMName "BOND_SOE_ADV_P_1.1.0.280" -Name "BRIDGE" -DeviceNaming on
