@@ -58,7 +58,7 @@ create a bundle of certificates eg (order may be important)
 
 #### Couldn't get this to work
 One of the stackoverflow posts above mentioned converting to pem but couldn't get that to work
-`openssl x509 -inform DER -outform PEM -in out/bondcontroller.crt -out out/bondcontroller.pem`
+`openssl x509 -inform DER -outform PEM -in out/mycontroller.crt -out out/mycontroller.pem`
 
 ### windows import certificate
 https://superuser.com/questions/1031444/importing-pem-certificates-on-windows-7-on-the-command-line
@@ -73,9 +73,3 @@ For 'Personal Store' replace "Root" with "My"
 
 
 # Things I learnt
-3b199bc4e7c88b008a5b630d66ec504109dfb5749a382f4b0d2c3458ff4fcbee
-
-
-
-
-Add-VMNetworkAdapter -VMName "BOND_SOE_ADV_P_1.1.0.280" -Name "BRIDGE" -DeviceNaming on
